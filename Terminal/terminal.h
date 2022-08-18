@@ -53,7 +53,7 @@ int isvalid(int d, int m, int y) {
     return 1;
 }
 EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
-    string str= get_string(NULL,"Enter Transaction Date: ");
+    string str= get_string(NULL,"Enter Transaction Date:\n");
 
     int n= strlen(str)-1;
     if(str[0]=='\0') return WRONG_DATE;
@@ -131,8 +131,7 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
 
 };
 EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData){
-    float in;
-    scanf("%f", in);
+    float in= get_float("Enter Transaction Amount:\n");
     if(in<=0) {
         termData->transAmount=in;
         return INVALID_AMOUNT;
@@ -144,8 +143,7 @@ EN_terminalError_t isBelowMaxAmount(ST_terminalData_t *termData){
     else return OK_t;
 };
 EN_terminalError_t setMaxAmount(ST_terminalData_t *termData){
-    float in;
-    scanf("%f", in);
+    float in= get_float("Enter Max Amount:\n");
     if(in<=0){
         termData->maxTransAmount=in;
         return INVALID_MAX_AMOUNT;

@@ -6,6 +6,7 @@
 #define UNTITLED3_SERVER_H
 
 #include <stdint.h>
+#include <string.h>
 
 typedef enum EN_transState_t
 {
@@ -53,7 +54,7 @@ ST_accountsDB_t accglobal[255]={
         }
 
 };
-ST_transaction_t tranansactionglobal[255]={
+struct ST_transaction_t tranansactionglobal[255]={
         {
                 {"0","0","0"},{0.0,0.0,"0"},APPROVED,0
         },{
@@ -74,12 +75,16 @@ EN_serverError_t isValidAccount(ST_cardData_t *cardData){
             return OK;
         }
     }
-    return DECLINED_STOLEN_CARD;
+    return ACCOUNT_NOT_FOUND;
 };
 
-EN_serverError_t isAmountAvailable(ST_terminalData_t *termData){
-    if(termData->transAmount==termData.)
-
+EN_serverError_t isAmountAvailable(ST_terminalData_t *termData,ST_accountsDB_t *accountsDb){//I had to change the parameters
+    for(int i=0;i<255;i++){
+    if(strcmp(accountsDb->primaryAccountNumber,accglobal[i].primaryAccountNumber)==0){
+        if(termData->transAmount<=accglobal[i].balance) return OK;
+    }
+    }
+    return LOW_BALANCE;
 
     /*
      This function will take terminal data and validate these data.
@@ -87,7 +92,7 @@ EN_serverError_t isAmountAvailable(ST_terminalData_t *termData){
     If the transaction amount is greater than the balance in the database will return LOW_BALANCE, else will return OK
      */
 };
-EN_serverError_t saveTransaction(ST_transaction_t *transData){
+EN_serverError_t saveTransaction(struct ST_transaction_t *transData){
     static int generator=1000;
     generator++;
     transData->transactionSequenceNumber=generator;
@@ -105,14 +110,19 @@ EN_serverError_t saveTransaction(ST_transaction_t *transData){
     If saves any type of transaction, APPROVED or DECLINED, with the specific reason for declining/transaction state.
     If transaction can't be saved will return SAVING_FAILED, else will return OK */
 };
-EN_transState_t receiveTransactionData(ST_transaction_t *transData){
-    if(isValidAccount(&transData->cardHolderData)==DECLINED_STOLEN_CARD){
+enum EN_transState_t receiveTransactionData(struct ST_transaction_t *transData){
+    if(isValidAccount(&transData->cardHolderData)==ACCOUNT_NOT_FOUND){
         transData->transState=DECLINED_STOLEN_CARD;
         return DECLINED_STOLEN_CARD;
     }
-    if(isAmountAvailable(&transData->terminalData)==LOW_BALANCE){
-        transData->transState= DECLINED_INSUFFECIENT_FUND;
-        return DECLINED_INSUFFECIENT_FUND;
+    for(int i=0;i<255;i++){
+        if(transData->cardHolderData.primaryAccountNumber==accglobal[i].primaryAccountNumber){
+            if(isAmountAvailable(&transData->terminalData,&accglobal[i])==LOW_BALANCE){
+                transData->transState= DECLINED_INSUFFECIENT_FUND;
+                return DECLINED_INSUFFECIENT_FUND;
+        }
+    }
+
 }
     if(saveTransaction(&transData)==SAVING_FAILED){
         transData->transState=INTERNAL_SERVER_ERROR;
@@ -130,7 +140,7 @@ EN_transState_t receiveTransactionData(ST_transaction_t *transData){
 
 
 
-EN_serverError_t getTransaction(uint32_t transactionSequenceNumber, ST_transaction_t *transData){
+EN_serverError_t getTransaction(uint32_t transactionSequenceNumber, struct ST_transaction_t *transData){
     /*
     This function will take a transaction sequence number and search for this transaction in the database.
     If the transaction can't be found will return TRANSACTION_NOT_FOUND, else will return OK and store the transaction in a structure
@@ -138,6 +148,8 @@ EN_serverError_t getTransaction(uint32_t transactionSequenceNumber, ST_transacti
     for(int i=0;i<255;i++){
         if(transactionSequenceNumber==tranansactionglobal[i].transactionSequenceNumber) return OK;
     }
+    transData->transactionSequenceNumber=transactionSequenceNumber;
+    //is this correct
     return TRANSACTION_NOT_FOUND;
 };
 

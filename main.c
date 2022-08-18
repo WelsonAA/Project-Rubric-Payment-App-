@@ -4,8 +4,8 @@
 #include "E:\untitled3\Terminal\terminal.h"
 
 int main() {
-    int x[5]={1,2,3};
-    printf("%i\n",sizeof(x)/4 );
+    ST_terminalData_t term1;
+    getTransactionAmount(&term1);
     ST_cardData_t card1;
 
 

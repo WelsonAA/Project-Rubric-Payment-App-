@@ -70,7 +70,7 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData){
         i++;
     }
     if(date[0]>12 || date[0]<1) return WRONG_EXP_DATE;
-    if(date[1]>100 || date[1]<0) return WRONG_EXP_DATE;
+    if(date[1]>99 || date[1]<0) return WRONG_EXP_DATE;
     if(flag ==1){
         return WRONG_EXP_DATE;
     }
