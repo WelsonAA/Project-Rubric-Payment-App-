@@ -9,30 +9,32 @@
 #include "E:\untitled3\Terminal\terminal.h"
 
 void appStart(void){
-    ST_cardData_t card1;
-    ST_terminalData_t term1;
-    getCardHolderName(&card1);
-    getCardExpiryDate(&card1);
-    getCardPAN(&card1);
-    getTransactionDate(&term1);
-    setMaxAmount(&term1);
-    if(isValidCardPAN(&card1)!=OK_t) {
+    //ST_cardData_t card1;
+    //ST_terminalData_t term1;
+    ST_transaction transaction1;
+    getCardHolderName(&transaction1.cardHolderData);
+    getCardExpiryDate(&transaction1.cardHolderData);
+    getCardPAN(&transaction1.cardHolderData);
+    getTransactionDate(&transaction1);
+    setMaxAmount(&transaction1.terminalData);
+    if(isValidCardPAN(&transaction1.terminalData)!=OK_t) {
         printf("Declined Invalid Primary Account Number\n");
     }
-    if(isCardExpired(card1,term1)!=OK_t) {
+    if(isCardExpired(transaction1.cardHolderData,transaction1.terminalData)!=OK_t) {
         printf("Declined Expired Card\n");
         return;
     }
-    getTransactionAmount(&term1);
-    if(isBelowMaxAmount(&term1)!=OK_t) {
+    getTransactionAmount(&transaction1.terminalData);
+    if(isBelowMaxAmount(&transaction1.terminalData)!=OK_t) {
         printf("Declined Amount Exceeding Limit\n");
         return;
     }
-    if(isValidAccount(&card1)!=OK){
+    if(isValidAccount(&transaction1.terminalData)!=OK){
         printf("Declined Invalid Account\n");
         return;
     };
-    if(isAmountAvailable())
+    receiveTransactionData(&transaction1);
+    getTransaction(get_int("Enter Transaction Sequence Number\n"),&transaction1);
 }
 ;
 #endif //UNTITLED3_APP_H
