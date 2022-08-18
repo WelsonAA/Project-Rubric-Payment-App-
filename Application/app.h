@@ -15,10 +15,17 @@ void appStart(void){
     getCardHolderName(&transaction1.cardHolderData);
     getCardExpiryDate(&transaction1.cardHolderData);
     getCardPAN(&transaction1.cardHolderData);
-    getTransactionDate(&transaction1);
-    setMaxAmount(&transaction1.terminalData);
-    if(isValidCardPAN(&transaction1.terminalData)!=OK_t) {
+    if(getTransactionDate(&transaction1)!=OK_t){
+        printf("Wrong Date\n");
+        return;
+    };
+    if(setMaxAmount(&transaction1.terminalData)!=OK_t){
+        printf("Invalid Max Amount");
+        return;
+    };
+    if(isValidCardPAN(&transaction1.cardHolderData)!=OK_t) {
         printf("Declined Invalid Primary Account Number\n");
+        return;
     }
     if(isCardExpired(transaction1.cardHolderData,transaction1.terminalData)!=OK_t) {
         printf("Declined Expired Card\n");

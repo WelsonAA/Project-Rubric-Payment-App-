@@ -28,9 +28,9 @@ EN_cardError_t getCardHolderName(ST_cardData_t *cardData){
     strcpy(cardData->cardHolderName ,get_string(NULL,"Enter Card Holder Name:\n"));
 
 
-    int n=strlen(cardData->cardHolderName)-1;
+    int n=strlen(cardData->cardHolderName);
     for(int i=0;i<n;i++){
-        if(isalpha(cardData->cardHolderName[i])==0 && cardData->cardHolderName!=' '){
+        if(isalpha(cardData->cardHolderName[i])==0 && cardData->cardHolderName[i]!=' '){
             return WRONG_NAME;
         }
     }
@@ -46,7 +46,7 @@ EN_cardError_t getCardHolderName(ST_cardData_t *cardData){
 };
 EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData){
     strcpy(cardData->cardExpirationDate ,get_string(NULL,"Enter Card Expiration Date:\n"));
-    int n=strlen(cardData->cardExpirationDate)-1;
+    int n=strlen(cardData->cardExpirationDate);
     if(n!=5 || cardData->cardExpirationDate[0]=='\0') return WRONG_EXP_DATE;
     int flag=0;
     for(int i=0;i<(n-1);i++){

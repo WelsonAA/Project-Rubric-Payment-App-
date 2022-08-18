@@ -11,12 +11,12 @@
 #include <stdlib.h>
 
 #include "E:\untitled3\top.h"
-typedef struct ST_terminalData_t
+/*typedef struct ST_terminalData_t
 {
     float transAmount;
     float maxTransAmount;
     uint8_t transactionDate[11];
-}ST_terminalData_t;
+}ST_terminalData_t;*/
 
 typedef enum EN_terminalError_t
 {
@@ -53,9 +53,9 @@ int isvalid(int d, int m, int y) {
     return 1;
 }
 EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
-    string str= get_string(NULL,"Enter Transaction Date:\n");
-
-    int n= strlen(str)-1;
+    string str;
+    strcpy(str,get_string(NULL,"Enter Transaction Date:\n"));
+    int n= strlen(str);
     if(str[0]=='\0') return WRONG_DATE;
     if (n!=10) return WRONG_DATE;
     for(int i=0;i<n;i++){
@@ -74,7 +74,10 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
         i++;
     }
     if(isvalid(date[0],date[1],date[2])==0) return WRONG_DATE;
-    else {strcpy(termData->transactionDate,str); return OK_t;}
+    else {
+        strcpy(termData->transactionDate,str);
+        return OK_t;
+    }
 };
 EN_terminalError_t isCardExpired(ST_cardData_t cardData, ST_terminalData_t termData){
     int exp[2];
@@ -87,13 +90,12 @@ EN_terminalError_t isCardExpired(ST_cardData_t cardData, ST_terminalData_t termD
         tokene = strtok(NULL, "/");
         i++;
     }
-    char* tokent = strtok(termData.transactionDate, "/");
+    char* tokent = strtok(&termData.transactionDate[3], "/");
     int j=0;
     while (tokent != NULL && j<2) {
-        trans[i]= atoi(tokene);
-
+        trans[j]= atoi(tokent);
         tokent = strtok(NULL, "/");
-        i++;
+        j++;
     }
     if((exp[1]+2000)<trans[1]){
         return EXPIRED_CARD;
@@ -144,10 +146,10 @@ EN_terminalError_t isBelowMaxAmount(ST_terminalData_t *termData){
 };
 EN_terminalError_t setMaxAmount(ST_terminalData_t *termData){
     float in= get_float("Enter Max Amount:\n");
-    if(in<=0){
+    if(in>0){
         termData->maxTransAmount=in;
-        return INVALID_MAX_AMOUNT;
+        return OK_t;
     }
-    return OK_t;
+    return INVALID_AMOUNT;
 };
 #endif //UNTITLED3_TERMINAL_H
