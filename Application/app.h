@@ -12,7 +12,10 @@ void appStart(void){
     //ST_cardData_t card1;
     //ST_terminalData_t term1;
     ST_transaction transaction1;
-    getCardHolderName(&transaction1.cardHolderData);
+    if(getCardHolderName(&transaction1.cardHolderData)!=OK_c){
+        printf("Invalid Name\n");
+        return;
+    };
     getCardExpiryDate(&transaction1.cardHolderData);
     getCardPAN(&transaction1.cardHolderData);
     if(getTransactionDate(&transaction1)!=OK_t){
