@@ -4,6 +4,21 @@
 #include "E:\untitled3\Application\app.h"
 
 int main() {
+    /*
+    char x[]="HI";*/
+    //string str= get_string(NULL,"Enter\n");
+    //printf("%s",str[5]);
+    /*
+    string original="10/25";
+    string copy;
+    strcpy(copy,original);
+    int date[2];
+    char* token=strtok(original,"/");
+    int i=0;
+    while(token!=NULL&& i<2){
+        date[i++]= atoi(token);
+        token =strtok(NULL,"/");
+    }*/
     /*char tokenstring[] = "12 23 3 4 5";
     char seps[] = " ";
     char* token;

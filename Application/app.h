@@ -18,7 +18,7 @@ void appStart(void){
     };
     getCardExpiryDate(&transaction1.cardHolderData);
     getCardPAN(&transaction1.cardHolderData);
-    if(getTransactionDate(&transaction1)!=OK_t){
+    if(getTransactionDate(&transaction1.terminalData)!=OK_t){
         printf("Wrong Date\n");
         return;
     };

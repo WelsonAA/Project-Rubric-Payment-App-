@@ -6,8 +6,10 @@
 #define UNTITLED3_TERMINAL_H
 
 #include <stdint.h>
+#include <string.h>
+#include <math.h>
 #include <stdio.h>
-#include <strings.h>
+#include <ctype.h>
 #include <stdlib.h>
 
 #include "E:\untitled3\top.h"
@@ -53,8 +55,8 @@ int isvalid(int d, int m, int y) {
     return 1;
 }
 EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
-
-    strcpy(termData->transactionDate,get_string(NULL,"Enter Transaction Date:\n"));
+    string expdate;
+    expdate=strcpy(termData->transactionDate,get_string(NULL,"Enter Transaction Date:\n"));
     int n= strlen(termData->transactionDate);
     if(termData->transactionDate[0]=='\0') return WRONG_DATE;
     if (n!=10) return WRONG_DATE;
@@ -64,8 +66,10 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
             if(termData->transactionDate[i]!='/') return WRONG_DATE;
         }
     }
-    string expdate;
-    strcpy(expdate,&termData->transactionDate);
+
+
+    //strcpy(expdate,termData->transactionDate);
+    //memcpy(expdate,termData->transactionDate, strlen(termData->transactionDate));
     int date[3];
     char* token = strtok(expdate, "/");
     int i=0;
@@ -75,6 +79,11 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
         token = strtok(NULL, "/");
         i++;
     }
+    for (int i=0;i<n;i++){
+        if(expdate[i]=='\0'){
+            expdate[i]='/';
+        }
+    }
     if(isvalid(date[0],date[1],date[2])==0) return WRONG_DATE;
     else return OK_t;
 
@@ -82,11 +91,31 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
 EN_terminalError_t isCardExpired(ST_cardData_t cardData, ST_terminalData_t termData){
     int exp[2];
     int trans[2];
-    char seps[]="/";
-    int var;
-    string expiry,transaction;
-    strcpy(expiry,cardData.cardExpirationDate);
-    strcpy(transaction,termData.transactionDate);
+    char* tokene = strtok(cardData.cardExpirationDate, "/");
+    int i=0;
+    while (tokene != NULL && i<2) {
+        exp[i]= atoi(tokene);
+
+        tokene = strtok(NULL, "/");
+        i++;
+    }
+    char* tokent= strtok(&termData.transactionDate[3],"/");
+    int j=0;
+    while(tokent!=NULL&&j<2){
+        trans[j]=atoi(tokent);
+        tokent = strtok(NULL, "/");
+        ++j;
+    }
+    for (int i=0;i<strlen(cardData.cardExpirationDate);i++){
+        if(cardData.cardExpirationDate[i]=='\0'){
+            cardData.cardExpirationDate[i]='/';
+        }
+    }
+    for (int i=0;i<strlen(termData.transactionDate);i++){
+        if(termData.transactionDate[i]=='\0'){
+            termData.transactionDate[i]='/';
+        }
+    }
     if((exp[1]+2000)<trans[1]){
         return EXPIRED_CARD;
     }
@@ -95,6 +124,7 @@ EN_terminalError_t isCardExpired(ST_cardData_t cardData, ST_terminalData_t termD
             return EXPIRED_CARD;
         }
     }
+    return OK_t;
 };
 EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
 
