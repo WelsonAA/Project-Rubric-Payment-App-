@@ -32,7 +32,6 @@ int isvalid(int d, int m, int y) {
         return 0;
     if(d < 1 || d > 31)
         return 0;
-    //Now we will check date according to month
     if( m == 2 ) {
         if(isleap(y)) {
             if(d <= 29)
@@ -41,7 +40,6 @@ int isvalid(int d, int m, int y) {
                 return 0;
         }
     }
-    //April, June, September and November are with 30 days
     if ( m == 4 || m == 6 || m == 9 || m == 11 )
         if(d <= 30)
             return 1;
@@ -126,15 +124,10 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
 
         int nSum = 0, isSecond = false;
         for (int i = n - 1; i >= 0; i--) {
-
-
             int d= cardData->primaryAccountNumber[i]-'0';
             if (isSecond == true)
                 d = d * 2;
 
-            // We add two digits to handle
-            // cases that make two digits after
-            // doubling
             nSum += d / 10;
             nSum += d % 10;
 

@@ -29,12 +29,7 @@ typedef struct ST_terminalData_t
     float maxTransAmount;
     uint8_t transactionDate[11];
 }ST_terminalData_t;
-/*typedef struct ST_cardData_t
-{
-    uint8_t cardHolderName[25];
-    uint8_t primaryAccountNumber[20];
-    uint8_t cardExpirationDate[6];
-}ST_cardData_t;*/
+
 typedef struct ST_transaction_t
 {
     ST_cardData_t cardHolderData;
@@ -85,12 +80,6 @@ EN_serverError_t isAmountAvailable(ST_terminalData_t *termData,ST_accountsDB_t *
     }
     }
     return LOW_BALANCE;
-
-    /*
-     This function will take terminal data and validate these data.
-    It checks if the transaction's amount is available or not.
-    If the transaction amount is greater than the balance in the database will return LOW_BALANCE, else will return OK
-     */
 };
 EN_serverError_t saveTransaction(struct ST_transaction_t *transData){
     static int generator=1000;
@@ -104,11 +93,6 @@ EN_serverError_t saveTransaction(struct ST_transaction_t *transData){
         }
     }
     return SAVING_FAILED;
-    /*
-     This function will take all transaction data into the transactions database.
-    It gives a sequence number to a transaction, this number is incremented once a transaction is processed into the server.
-    If saves any type of transaction, APPROVED or DECLINED, with the specific reason for declining/transaction state.
-    If transaction can't be saved will return SAVING_FAILED, else will return OK */
 };
 enum EN_transState_t receiveTransactionData(struct ST_transaction_t *transData){
     if(isValidAccount(&transData->cardHolderData)==ACCOUNT_NOT_FOUND){
@@ -135,21 +119,17 @@ enum EN_transState_t receiveTransactionData(struct ST_transaction_t *transData){
             return APPROVED;
         }
     }
-    //update the database with new balance and return APPROVED
 };
 
 
 
 EN_serverError_t getTransaction(uint32_t transactionSequenceNumber, struct ST_transaction_t *transData){
-    /*
-    This function will take a transaction sequence number and search for this transaction in the database.
-    If the transaction can't be found will return TRANSACTION_NOT_FOUND, else will return OK and store the transaction in a structure
-     */
+
     for(int i=0;i<255;i++){
         if(transactionSequenceNumber==tranansactionglobal[i].transactionSequenceNumber) return OK;
     }
     transData->transactionSequenceNumber=transactionSequenceNumber;
-    //is this correct
+
     return TRANSACTION_NOT_FOUND;
 };
 

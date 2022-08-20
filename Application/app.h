@@ -57,6 +57,7 @@ void appStart(void){
             return;
         case OK:
             printf("Transaction Found\n");
+            return;
     }
 
 }
