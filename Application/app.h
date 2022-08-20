@@ -39,11 +39,23 @@ void appStart(void){
         printf("Declined Amount Exceeding Limit\n");
         return;
     }
-    if(isValidAccount(&transaction1.terminalData)!=OK){
+    /*if(isValidAccount(&transaction1.cardHolderData)!=OK){
         printf("Declined Invalid Account\n");
         return;
+    };*/
+    switch (receiveTransactionData(&transaction1)){
+        case DECLINED_STOLEN_CARD:
+            printf("Declined Stolen Card\n");
+            return;
+        case DECLINED_INSUFFECIENT_FUND:
+            printf("Declined Insufficient Fund\n");
+            return;
+        case INTERNAL_SERVER_ERROR:
+            printf("Internal Server Error\n");
+            return;
+        default:
+            printf("Approved\n");
     };
-    receiveTransactionData(&transaction1);
     getTransaction(get_int("Enter Transaction Sequence Number\n"),&transaction1);
 }
 ;

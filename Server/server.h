@@ -71,7 +71,7 @@ struct ST_transaction_t tranansactionglobal[255]={
 };
 EN_serverError_t isValidAccount(ST_cardData_t *cardData){
     for(int i=0;i<255;i++){
-        if(cardData->primaryAccountNumber==accglobal[i].primaryAccountNumber){
+        if(strcmp(cardData->primaryAccountNumber,accglobal[i].primaryAccountNumber)==0){
             return OK;
         }
     }
@@ -116,7 +116,7 @@ enum EN_transState_t receiveTransactionData(struct ST_transaction_t *transData){
         return DECLINED_STOLEN_CARD;
     }
     for(int i=0;i<255;i++){
-        if(transData->cardHolderData.primaryAccountNumber==accglobal[i].primaryAccountNumber){
+        if(strcmp(transData->cardHolderData.primaryAccountNumber,accglobal[i].primaryAccountNumber)==0){
             if(isAmountAvailable(&transData->terminalData,&accglobal[i])==LOW_BALANCE){
                 transData->transState= DECLINED_INSUFFECIENT_FUND;
                 return DECLINED_INSUFFECIENT_FUND;

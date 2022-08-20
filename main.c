@@ -4,6 +4,7 @@
 #include "E:\untitled3\Application\app.h"
 
 int main() {
+    //printf("%i\n",strcmp("i","i"));
     /*
     char x[]="HI";*/
     //string str= get_string(NULL,"Enter\n");
