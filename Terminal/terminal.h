@@ -64,8 +64,10 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
             if(termData->transactionDate[i]!='/') return WRONG_DATE;
         }
     }
+    string expdate;
+    strcpy(expdate,&termData->transactionDate);
     int date[3];
-    char* token = strtok(termData->transactionDate, "/");
+    char* token = strtok(expdate, "/");
     int i=0;
     while (token != NULL && i<3) {
         date[i]= atoi(token);
@@ -80,20 +82,11 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
 EN_terminalError_t isCardExpired(ST_cardData_t cardData, ST_terminalData_t termData){
     int exp[2];
     int trans[2];
-    char* tokene = strtok(cardData.cardExpirationDate, "/");
-    int i=0;
-    while (tokene != NULL && i<2) {
-        exp[i]= atoi(tokene);
-        tokene = strtok(NULL, "/");
-        i++;
-    }
-    char* tokent = strtok(termData.transactionDate[3], "/");
-    int j=0;
-    while (tokent != NULL && j<2) {
-        trans[j]= atoi(tokent);
-        tokent = strtok(NULL, "/");
-        j++;
-    }
+    char seps[]="/";
+    int var;
+    string expiry,transaction;
+    strcpy(expiry,cardData.cardExpirationDate);
+    strcpy(transaction,termData.transactionDate);
     if((exp[1]+2000)<trans[1]){
         return EXPIRED_CARD;
     }

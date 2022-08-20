@@ -61,7 +61,9 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData){
     }
 
     int date[2];
-    char* token = strtok(cardData->cardExpirationDate, "/");
+    string str;
+    strcpy(str,cardData->cardExpirationDate);
+    char* token = strtok(str, "/");
     int i=0;
     while (token != NULL && i<2) {
         date[i]= atoi(token);
