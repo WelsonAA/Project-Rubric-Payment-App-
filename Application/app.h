@@ -9,8 +9,6 @@
 #include "E:\untitled3\Terminal\terminal.h"
 
 void appStart(void){
-    //ST_cardData_t card1;
-    //ST_terminalData_t term1;
     ST_transaction transaction1;
     if(getCardHolderName(&transaction1.cardHolderData)!=OK_c){
         printf("Invalid Name\n");
@@ -39,10 +37,7 @@ void appStart(void){
         printf("Declined Amount Exceeding Limit\n");
         return;
     }
-    /*if(isValidAccount(&transaction1.cardHolderData)!=OK){
-        printf("Declined Invalid Account\n");
-        return;
-    };*/
+
     switch (receiveTransactionData(&transaction1)){
         case DECLINED_STOLEN_CARD:
             printf("Declined Stolen Card\n");
@@ -56,7 +51,14 @@ void appStart(void){
         default:
             printf("Approved\n");
     };
-    getTransaction(get_int("Enter Transaction Sequence Number\n"),&transaction1);
+    switch (getTransaction(get_int("Enter Transaction Sequence Number\n"),&transaction1)){
+        case TRANSACTION_NOT_FOUND:
+            printf("Transaction Not Found\n");
+            return;
+        case OK:
+            printf("Transaction Found\n");
+    }
+
 }
 ;
 #endif //UNTITLED3_APP_H

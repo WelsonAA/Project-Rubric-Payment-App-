@@ -13,12 +13,7 @@
 #include <stdlib.h>
 
 #include "E:\untitled3\top.h"
-/*typedef struct ST_terminalData_t
-{
-    float transAmount;
-    float maxTransAmount;
-    uint8_t transactionDate[11];
-}ST_terminalData_t;*/
+
 
 typedef enum EN_terminalError_t
 {
@@ -68,8 +63,7 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
     }
 
 
-    //strcpy(expdate,termData->transactionDate);
-    //memcpy(expdate,termData->transactionDate, strlen(termData->transactionDate));
+
     int date[3];
     char* token = strtok(expdate, "/");
     int i=0;
