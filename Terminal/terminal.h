@@ -79,7 +79,7 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
     if(isvalid(date[0],date[1],date[2])==0) return WRONG_DATE;
     else return OK_t;
 
-};
+}
 EN_terminalError_t isCardExpired(ST_cardData_t cardData, ST_terminalData_t termData){
     int exp[2];
     int trans[2];
@@ -117,7 +117,7 @@ EN_terminalError_t isCardExpired(ST_cardData_t cardData, ST_terminalData_t termD
         }
     }
     return OK_t;
-};
+}
 EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
 
         int n = strlen(cardData->primaryAccountNumber);
@@ -138,17 +138,17 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
     else return INVALID_CARD;
 
 
-};
+}
 EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData){
     float in= get_float("Enter Transaction Amount:\n");
     if(in<=0)return INVALID_AMOUNT;
     termData->transAmount=in;
     return OK_t;
-};
+}
 EN_terminalError_t isBelowMaxAmount(ST_terminalData_t *termData){
     if(termData->transAmount>termData->maxTransAmount) return EXCEED_MAX_AMOUNT;
     else return OK_t;
-};
+}
 EN_terminalError_t setMaxAmount(ST_terminalData_t *termData){
     float in= get_float("Enter Max Amount:\n");
     if(in>0){
@@ -156,5 +156,5 @@ EN_terminalError_t setMaxAmount(ST_terminalData_t *termData){
         return OK_t;
     }
     return INVALID_MAX_AMOUNT;
-};
+}
 #endif //UNTITLED3_TERMINAL_H

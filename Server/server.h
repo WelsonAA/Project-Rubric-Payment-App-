@@ -71,7 +71,7 @@ EN_serverError_t isValidAccount(ST_cardData_t *cardData){
         }
     }
     return ACCOUNT_NOT_FOUND;
-};
+}
 
 EN_serverError_t isAmountAvailable(ST_terminalData_t *termData,ST_accountsDB_t *accountsDb){//I had to change the parameters
     for(int i=0;i<255;i++){
@@ -80,7 +80,7 @@ EN_serverError_t isAmountAvailable(ST_terminalData_t *termData,ST_accountsDB_t *
     }
     }
     return LOW_BALANCE;
-};
+}
 EN_serverError_t saveTransaction(struct ST_transaction_t *transData){
     static int generator=1000;
     generator++;
@@ -93,32 +93,28 @@ EN_serverError_t saveTransaction(struct ST_transaction_t *transData){
         }
     }
     return SAVING_FAILED;
-};
+}
 enum EN_transState_t receiveTransactionData(struct ST_transaction_t *transData){
     if(isValidAccount(&transData->cardHolderData)==ACCOUNT_NOT_FOUND){
         transData->transState=DECLINED_STOLEN_CARD;
         return DECLINED_STOLEN_CARD;
     }
-    for(int i=0;i<255;i++){
-        if(strcmp(transData->cardHolderData.primaryAccountNumber,accglobal[i].primaryAccountNumber)==0){
-            if(isAmountAvailable(&transData->terminalData,&accglobal[i])==LOW_BALANCE){
-                transData->transState= DECLINED_INSUFFECIENT_FUND;
+    for(int i=0;i<255;i++) {
+        if (strcmp(transData->cardHolderData.primaryAccountNumber, accglobal[i].primaryAccountNumber) == 0) {
+            if (isAmountAvailable(&transData->terminalData, &accglobal[i]) == LOW_BALANCE) {
+                transData->transState = DECLINED_INSUFFECIENT_FUND;
                 return DECLINED_INSUFFECIENT_FUND;
-        }
-    }
-}
-
-    for(int i=0;i<255;i++){
-        if(strcmp(transData->cardHolderData.primaryAccountNumber,accglobal[i].primaryAccountNumber)==0){
-            accglobal[i].balance-=transData->terminalData.transAmount;
-            if(saveTransaction(&transData)==SAVING_FAILED){
-                transData->transState=INTERNAL_SERVER_ERROR;
-                return INTERNAL_SERVER_ERROR;
+            } else {
+                accglobal[i].balance -= transData->terminalData.transAmount;
+                if (saveTransaction(transData) == SAVING_FAILED) {
+                    transData->transState = INTERNAL_SERVER_ERROR;
+                    return INTERNAL_SERVER_ERROR;
+                }
+                return APPROVED;
             }
-            return APPROVED;
         }
     }
- };
+ }
 
 
 
@@ -130,6 +126,6 @@ EN_serverError_t getTransaction(uint32_t transactionSequenceNumber, struct ST_tr
     transData->transactionSequenceNumber=transactionSequenceNumber;
 
     return TRANSACTION_NOT_FOUND;
-};
+}
 
 #endif //UNTITLED3_SERVER_H

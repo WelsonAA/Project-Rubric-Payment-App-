@@ -70,5 +70,4 @@ void appStart(void){
     }
 
 }
-;
 #endif //UNTITLED3_APP_H

@@ -43,7 +43,7 @@ EN_cardError_t getCardHolderName(ST_cardData_t *cardData){
     else{
         return OK_c;
     }
-};
+}
 EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData){
     strcpy(cardData->cardExpirationDate ,get_string(NULL,"Enter Card Expiration Date:\n"));
     int n=strlen(cardData->cardExpirationDate);
@@ -77,7 +77,7 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData){
         return WRONG_EXP_DATE;
     }
     else return OK_c;
-};
+}
 EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     strcpy(cardData->primaryAccountNumber ,get_string(NULL,"Enter Primary Account Number:\n"));
     int n=strlen(cardData->primaryAccountNumber);
@@ -95,6 +95,6 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     if(flag==0)
     return OK_c;
     else return WRONG_PAN;
-};
+}
 
 #endif //UNTITLED3_CARD_H
