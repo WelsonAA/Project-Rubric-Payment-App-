@@ -14,8 +14,14 @@ void appStart(void){
         printf("Invalid Name\n");
         return;
     };
-    getCardExpiryDate(&transaction1.cardHolderData);
-    getCardPAN(&transaction1.cardHolderData);
+    if(getCardExpiryDate(&transaction1.cardHolderData)!=OK_c){
+        printf("Invalid Expiry Date\n");
+        return;
+    };
+    if(getCardPAN(&transaction1.cardHolderData)!=OK_c){
+        printf("Invalid Primary Account Number\n");
+        return;
+    };
     if(getTransactionDate(&transaction1.terminalData)!=OK_t){
         printf("Wrong Date\n");
         return;
@@ -32,7 +38,10 @@ void appStart(void){
         printf("Declined Expired Card\n");
         return;
     }
-    getTransactionAmount(&transaction1.terminalData);
+    if(getTransactionAmount(&transaction1.terminalData)!=OK_t){
+        printf("Declined Invalid Amount\n");
+        return;
+    };
     if(isBelowMaxAmount(&transaction1.terminalData)!=OK_t) {
         printf("Declined Amount Exceeding Limit\n");
         return;

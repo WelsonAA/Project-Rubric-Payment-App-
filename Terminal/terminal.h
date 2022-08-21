@@ -141,10 +141,8 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
 };
 EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData){
     float in= get_float("Enter Transaction Amount:\n");
-    if(in<=0) {
-        termData->transAmount=in;
-        return INVALID_AMOUNT;
-    }
+    if(in<=0)return INVALID_AMOUNT;
+    termData->transAmount=in;
     return OK_t;
 };
 EN_terminalError_t isBelowMaxAmount(ST_terminalData_t *termData){
@@ -157,6 +155,6 @@ EN_terminalError_t setMaxAmount(ST_terminalData_t *termData){
         termData->maxTransAmount=in;
         return OK_t;
     }
-    return INVALID_AMOUNT;
+    return INVALID_MAX_AMOUNT;
 };
 #endif //UNTITLED3_TERMINAL_H
