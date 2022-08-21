@@ -51,17 +51,17 @@ ST_accountsDB_t accglobal[255]={
 };
 struct ST_transaction_t tranansactionglobal[255]={
         {
-                {"0","0","0"},{0.0,0.0,"0"},APPROVED,0
+                {"0","0","0"},{0.0,0.0,"0"},0,0
         },{
-                {"0","0","0"},{0.0,0.0,"0"},APPROVED,0
+                {"0","0","0"},{0.0,0.0,"0"},0,0
         },{
-                {"0","0","0"},{0.0,0.0,"0"},APPROVED,0
+                {"0","0","0"},{0.0,0.0,"0"},0,0
         },{
-                {"0","0","0"},{0.0,0.0,"0"},APPROVED,0
+                {"0","0","0"},{0.0,0.0,"0"},0,0
         },{
-                {"0","0","0"},{0.0,0.0,"0"},APPROVED,0
+                {"0","0","0"},{0.0,0.0,"0"},0,0
         },{
-                {"0","0","0"},{0.0,0.0,"0"},APPROVED,0
+                {"0","0","0"},{0.0,0.0,"0"},0,0
         }
 };
 EN_serverError_t isValidAccount(ST_cardData_t *cardData){
@@ -113,7 +113,7 @@ enum EN_transState_t receiveTransactionData(struct ST_transaction_t *transData){
         return INTERNAL_SERVER_ERROR;
     }
     for(int i=0;i<255;i++){
-        if(transData->cardHolderData.primaryAccountNumber==accglobal[i].primaryAccountNumber){
+        if(strcmp(transData->cardHolderData.primaryAccountNumber,accglobal[i].primaryAccountNumber)==0){
             accglobal[i].balance-=transData->terminalData.transAmount;
             saveTransaction(transData);
             return APPROVED;
