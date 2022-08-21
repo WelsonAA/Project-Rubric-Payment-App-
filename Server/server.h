@@ -106,20 +106,19 @@ enum EN_transState_t receiveTransactionData(struct ST_transaction_t *transData){
                 return DECLINED_INSUFFECIENT_FUND;
         }
     }
-
 }
-    if(saveTransaction(&transData)==SAVING_FAILED){
-        transData->transState=INTERNAL_SERVER_ERROR;
-        return INTERNAL_SERVER_ERROR;
-    }
+
     for(int i=0;i<255;i++){
         if(strcmp(transData->cardHolderData.primaryAccountNumber,accglobal[i].primaryAccountNumber)==0){
             accglobal[i].balance-=transData->terminalData.transAmount;
-            saveTransaction(transData);
+            if(saveTransaction(&transData)==SAVING_FAILED){
+                transData->transState=INTERNAL_SERVER_ERROR;
+                return INTERNAL_SERVER_ERROR;
+            }
             return APPROVED;
         }
     }
-};
+ };
 
 
 
