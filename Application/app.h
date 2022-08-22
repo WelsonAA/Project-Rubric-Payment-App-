@@ -27,7 +27,7 @@ void appStart(void){
         return;
     };
     if(setMaxAmount(&transaction1.terminalData)!=OK_t){
-        printf("Invalid Max Amount");
+        printf("Invalid Max Amount\n");
         return;
     };
     if(isValidCardPAN(&transaction1.cardHolderData)!=OK_t) {

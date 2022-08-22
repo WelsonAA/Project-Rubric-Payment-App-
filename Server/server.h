@@ -39,16 +39,17 @@ typedef struct ST_transaction_t
     uint32_t transactionSequenceNumber;
 }ST_transaction;
 
-ST_accountsDB_t accglobal[255]={{
+ST_accountsDB_t accglobal[255]={
+    {
     8000.0,"7502289947808108"
-},{
+    },{
     755.0,"51714505293369193"
-},/*{
+    },{
     4563.4,"1332184076269645697"
-}*/
+    }
 };
 
-struct ST_transaction_t tranansactionglobal[255]={
+struct ST_transaction_t transactionglobal[255]={
         {
                 {"0","0","0"},{0.0,0.0,"0"},0,0
         },{
@@ -84,8 +85,8 @@ EN_serverError_t saveTransaction(struct ST_transaction_t *transData){
     transData->transactionSequenceNumber=generator;
 
     for(int i=0;i<255;i++){
-        if(tranansactionglobal[i].transactionSequenceNumber==0){
-            tranansactionglobal[i]=*transData;
+        if(transactionglobal[i].transactionSequenceNumber==0){
+            transactionglobal[i]=*transData;
             return OK;
         }
     }
@@ -117,7 +118,7 @@ enum EN_transState_t receiveTransactionData(struct ST_transaction_t *transData){
 EN_serverError_t getTransaction(uint32_t transactionSequenceNumber, struct ST_transaction_t *transData){
 
     for(int i=0;i<255;i++){
-        if(transactionSequenceNumber==tranansactionglobal[i].transactionSequenceNumber) return OK;
+        if(transactionSequenceNumber==transactionglobal[i].transactionSequenceNumber) return OK;
     }
     transData->transactionSequenceNumber=transactionSequenceNumber;
 

@@ -3,8 +3,5 @@
 //
 #include "E:\untitled3\Application\app.h"
 void main(void) {
-
     appStart();
-
-
 }

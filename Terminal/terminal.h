@@ -127,7 +127,7 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
         }
     if(nSum % 10 ==0) {
         return OK_t;}
-    else return  ;
+    else return INVALID_CARD ;
 }
 
 EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData){
