@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
-
 #include "E:\untitled3\top.h"
 typedef struct ST_cardData_t
 {
@@ -24,6 +23,7 @@ typedef enum EN_cardError_t
 {
     OK_c, WRONG_NAME, WRONG_EXP_DATE, WRONG_PAN
 }EN_cardError_t;
+
 EN_cardError_t getCardHolderName(ST_cardData_t *cardData){
     strcpy(cardData->cardHolderName ,get_string(NULL,"Enter Card Holder Name:\n"));
 
@@ -44,6 +44,7 @@ EN_cardError_t getCardHolderName(ST_cardData_t *cardData){
         return OK_c;
     }
 }
+
 EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData){
     strcpy(cardData->cardExpirationDate ,get_string(NULL,"Enter Card Expiration Date:\n"));
     int n=strlen(cardData->cardExpirationDate);
@@ -59,7 +60,6 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData){
             break;
         }
     }
-
     int date[2];
     string str;
     strcpy(str,cardData->cardExpirationDate);
@@ -78,6 +78,7 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData){
     }
     else return OK_c;
 }
+
 EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     strcpy(cardData->primaryAccountNumber ,get_string(NULL,"Enter Primary Account Number:\n"));
     int n=strlen(cardData->primaryAccountNumber);

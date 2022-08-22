@@ -23,6 +23,7 @@ typedef struct ST_accountsDB_t
     float balance;
     uint8_t primaryAccountNumber[20];
 }ST_accountsDB_t;
+
 typedef struct ST_terminalData_t
 {
     float transAmount;
@@ -37,18 +38,16 @@ typedef struct ST_transaction_t
     enum EN_transState_t transState;
     uint32_t transactionSequenceNumber;
 }ST_transaction;
-ST_accountsDB_t accglobal[255]={
-        {
-        8000.0,"7502289947808108"
-        },
-        {
-            755.0,"51714505293369193"
-        },
-        {
-            4563.4,"1332184076269645697"
-        }
 
+ST_accountsDB_t accglobal[255]={{
+    8000.0,"7502289947808108"
+},{
+    755.0,"51714505293369193"
+},{
+    4563.4,"1332184076269645697"
+}
 };
+
 struct ST_transaction_t tranansactionglobal[255]={
         {
                 {"0","0","0"},{0.0,0.0,"0"},0,0
@@ -64,6 +63,7 @@ struct ST_transaction_t tranansactionglobal[255]={
                 {"0","0","0"},{0.0,0.0,"0"},0,0
         }
 };
+
 EN_serverError_t isValidAccount(ST_cardData_t *cardData){
     for(int i=0;i<255;i++){
         if(strcmp(cardData->primaryAccountNumber,accglobal[i].primaryAccountNumber)==0){
@@ -81,6 +81,7 @@ EN_serverError_t isAmountAvailable(ST_terminalData_t *termData,ST_accountsDB_t *
     }
     return LOW_BALANCE;
 }
+
 EN_serverError_t saveTransaction(struct ST_transaction_t *transData){
     static int generator=1000;
     generator++;
@@ -94,6 +95,7 @@ EN_serverError_t saveTransaction(struct ST_transaction_t *transData){
     }
     return SAVING_FAILED;
 }
+
 enum EN_transState_t receiveTransactionData(struct ST_transaction_t *transData){
     if(isValidAccount(&transData->cardHolderData)==ACCOUNT_NOT_FOUND){
         transData->transState=DECLINED_STOLEN_CARD;
@@ -115,8 +117,6 @@ enum EN_transState_t receiveTransactionData(struct ST_transaction_t *transData){
         }
     }
  }
-
-
 
 EN_serverError_t getTransaction(uint32_t transactionSequenceNumber, struct ST_transaction_t *transData){
 

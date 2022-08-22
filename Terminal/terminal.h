@@ -11,20 +11,20 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
-
 #include "E:\untitled3\top.h"
-
 
 typedef enum EN_terminalError_t
 {
     OK_t, WRONG_DATE, EXPIRED_CARD, INVALID_CARD, INVALID_AMOUNT, EXCEED_MAX_AMOUNT, INVALID_MAX_AMOUNT
-}EN_terminalError_t ;
+}EN_terminalError_t;
+
 int isleap(int y) {
     if((y % 4 == 0) && (y % 100 != 0) && (y % 400 == 0))
         return 1;
     else
         return 0;
 }
+
 int isvalid(int d, int m, int y) {
     if(y < 2000 || y > 2100)
         return 0;
@@ -47,6 +47,7 @@ int isvalid(int d, int m, int y) {
             return 0;
     return 1;
 }
+
 EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
     string expdate;
     expdate=strcpy(termData->transactionDate,get_string(NULL,"Enter Transaction Date:\n"));
@@ -78,8 +79,8 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
     }
     if(isvalid(date[0],date[1],date[2])==0) return WRONG_DATE;
     else return OK_t;
-
 }
+
 EN_terminalError_t isCardExpired(ST_cardData_t cardData, ST_terminalData_t termData){
     int exp[2];
     int trans[2];
@@ -118,6 +119,7 @@ EN_terminalError_t isCardExpired(ST_cardData_t cardData, ST_terminalData_t termD
     }
     return OK_t;
 }
+
 EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
 
         int n = strlen(cardData->primaryAccountNumber);
@@ -136,19 +138,20 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
     if(nSum % 10 ==0) {
         return OK_t;}
     else return INVALID_CARD;
-
-
 }
+
 EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData){
     float in= get_float("Enter Transaction Amount:\n");
     if(in<=0)return INVALID_AMOUNT;
     termData->transAmount=in;
     return OK_t;
 }
+
 EN_terminalError_t isBelowMaxAmount(ST_terminalData_t *termData){
     if(termData->transAmount>termData->maxTransAmount) return EXCEED_MAX_AMOUNT;
     else return OK_t;
 }
+
 EN_terminalError_t setMaxAmount(ST_terminalData_t *termData){
     float in= get_float("Enter Max Amount:\n");
     if(in>0){
@@ -157,4 +160,5 @@ EN_terminalError_t setMaxAmount(ST_terminalData_t *termData){
     }
     return INVALID_MAX_AMOUNT;
 }
+
 #endif //UNTITLED3_TERMINAL_H

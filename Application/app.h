@@ -46,7 +46,6 @@ void appStart(void){
         printf("Declined Amount Exceeding Limit\n");
         return;
     }
-
     switch (receiveTransactionData(&transaction1)){
         case DECLINED_STOLEN_CARD:
             printf("Declined Stolen Card\n");
@@ -59,7 +58,7 @@ void appStart(void){
             return;
         default:
             printf("Approved\n");
-    };
+    }
     switch (getTransaction(get_int("Enter Transaction Sequence Number\n"),&transaction1)){
         case TRANSACTION_NOT_FOUND:
             printf("Transaction Not Found\n");
@@ -68,6 +67,5 @@ void appStart(void){
             printf("Transaction Found\n");
             return;
     }
-
 }
 #endif //UNTITLED3_APP_H
