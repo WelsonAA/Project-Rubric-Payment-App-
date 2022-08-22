@@ -35,9 +35,8 @@ EN_cardError_t getCardHolderName(ST_cardData_t *cardData){
         }
     }
     if(cardData->cardHolderName[0]=='\0')
-        return WRONG_NAME;;
+        return WRONG_NAME;
     if( n<20 || n>24 ){
-
         return WRONG_NAME;
     }
     else{
@@ -50,7 +49,7 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData){
     int n=strlen(cardData->cardExpirationDate);
     if(n!=5 || cardData->cardExpirationDate[0]=='\0') return WRONG_EXP_DATE;
     int flag=0;
-    for(int i=0;i<(n-1);i++){
+    for(int i=0;i<n;i++){
         if(i!=2 && isdigit(cardData->cardExpirationDate[i])==0){
             flag =1;
             break;

@@ -73,7 +73,7 @@ EN_serverError_t isValidAccount(ST_cardData_t *cardData){
     return ACCOUNT_NOT_FOUND;
 }
 
-EN_serverError_t isAmountAvailable(ST_terminalData_t *termData,ST_accountsDB_t *accountsDb){//I had to change the parameters
+EN_serverError_t isAmountAvailable(ST_terminalData_t *termData,ST_accountsDB_t *accountsDb){
     for(int i=0;i<255;i++){
     if(strcmp(accountsDb->primaryAccountNumber,accglobal[i].primaryAccountNumber)==0){
         if(termData->transAmount<=accglobal[i].balance) return OK;
@@ -89,7 +89,7 @@ EN_serverError_t saveTransaction(struct ST_transaction_t *transData){
 
     for(int i=0;i<255;i++){
         if(tranansactionglobal[i].transactionSequenceNumber==0){
-            tranansactionglobal[i]=*transData;//check again
+            tranansactionglobal[i]=*transData;
             return OK;
         }
     }
