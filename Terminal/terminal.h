@@ -99,16 +99,6 @@ EN_terminalError_t isCardExpired(ST_cardData_t cardData, ST_terminalData_t termD
         tokent = strtok(NULL, "/");
         ++j;
     }
-    for (int i=0;i<strlen(cardData.cardExpirationDate);i++){
-        if(cardData.cardExpirationDate[i]=='\0'){
-            cardData.cardExpirationDate[i]='/';
-        }
-    }
-    for (int i=0;i<strlen(termData.transactionDate);i++){
-        if(termData.transactionDate[i]=='\0'){
-            termData.transactionDate[i]='/';
-        }
-    }
     if((exp[1]+2000)<trans[1]){
         return EXPIRED_CARD;
     }
@@ -137,7 +127,7 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
         }
     if(nSum % 10 ==0) {
         return OK_t;}
-    else return INVALID_CARD;
+    else return  ;
 }
 
 EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData){

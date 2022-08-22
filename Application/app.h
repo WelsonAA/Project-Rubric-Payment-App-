@@ -10,10 +10,10 @@
 
 void appStart(void){
     ST_transaction transaction1;
-    /*if(getCardHolderName(&transaction1.cardHolderData)!=OK_c){
+    if(getCardHolderName(&transaction1.cardHolderData)!=OK_c){
         printf("Invalid Name\n");
         return;
-    };*/
+    };
     if(getCardExpiryDate(&transaction1.cardHolderData)!=OK_c){
         printf("Invalid Expiry Date\n");
         return;
