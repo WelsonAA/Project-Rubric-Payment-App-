@@ -43,9 +43,9 @@ ST_accountsDB_t accglobal[255]={{
     8000.0,"7502289947808108"
 },{
     755.0,"51714505293369193"
-},{
+},/*{
     4563.4,"1332184076269645697"
-}
+}*/
 };
 
 struct ST_transaction_t tranansactionglobal[255]={
@@ -74,11 +74,7 @@ EN_serverError_t isValidAccount(ST_cardData_t *cardData){
 }
 
 EN_serverError_t isAmountAvailable(ST_terminalData_t *termData,ST_accountsDB_t *accountsDb){
-    for(int i=0;i<255;i++){
-    if(strcmp(accountsDb->primaryAccountNumber,accglobal[i].primaryAccountNumber)==0){
-        if(termData->transAmount<=accglobal[i].balance) return OK;
-    }
-    }
+        if(termData->transAmount<=accountsDb->balance) return OK;
     return LOW_BALANCE;
 }
 
