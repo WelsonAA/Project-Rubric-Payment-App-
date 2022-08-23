@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include "../Card/card.h"
 
 typedef enum EN_transState_t
 {

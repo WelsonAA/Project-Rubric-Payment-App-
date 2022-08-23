@@ -4,9 +4,10 @@
 
 #ifndef UNTITLED3_APP_H
 #define UNTITLED3_APP_H
-#include "E:\untitled3\Card\card.h"
-#include "E:\untitled3\Server\server.h"
-#include "E:\untitled3\Terminal\terminal.h"
+
+#include "../Server/server.h"
+#include "../Terminal/terminal.h"
+#include "../Card/card.h"
 
 void appStart(void){
     ST_transaction transaction1;
