@@ -12,27 +12,26 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "../top.h"
-
 typedef enum EN_terminalError_t
 {
     OK_t, WRONG_DATE, EXPIRED_CARD, INVALID_CARD, INVALID_AMOUNT, EXCEED_MAX_AMOUNT, INVALID_MAX_AMOUNT
 }EN_terminalError_t;
 
-int isleap(int y) {
-    if((y % 4 == 0) && (y % 100 != 0) && (y % 400 == 0))
+int isleap(int x) {
+    if((0==x%4) && (0!=x%100) && (0==x%400))
         return 1;
     else
         return 0;
 }
 
 int isvalid(int d, int m, int y) {
-    if(y < 2000 || y > 2100)
+    if(2000>y || 2100<y)
         return 0;
-    if(m < 1 || m > 12)
+    if(1>m || 12<m)
         return 0;
-    if(d < 1 || d > 31)
+    if(1>d || 31<d)
         return 0;
-    if( m == 2 ) {
+    if( 2==m) {
         if(isleap(y)) {
             if(d <= 29)
                 return 1;
@@ -40,8 +39,8 @@ int isvalid(int d, int m, int y) {
                 return 0;
         }
     }
-    if ( m == 4 || m == 6 || m == 9 || m == 11 )
-        if(d <= 30)
+    if ( 4==m || 6==m || 9==m || 11==m )
+        if(30>=d)
             return 1;
         else
             return 0;
